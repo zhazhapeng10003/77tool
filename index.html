@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="zh-hans">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>欢迎来到我的网页！</h1>
-    <a href="https://www.baidu.com/" target="_blank">
-        <button>点击这里跳转到百度官网</button>
-    </a>
-</body>
-</html>
+<!-- 主要结构 -->
+<div class="container">
+  <h1>法律文书 一键下载</h1>
+  <div class="input-box">
+    <textarea id="sms-content" placeholder="粘贴法院发送的短信内容..."></textarea>
+    <button @click="parseSMS">解析文书</button>
+  </div>
+  
+  <div class="file-list">
+    <h3>文件列表</h3>
+    <div v-for="file in files" :key="file.name" class="file-item">
+      <span>{{ file.name }}</span>
+      <button @click="downloadFile(file)">下载</button>
+    </div>
+    <button class="bulk-download" @click="bulkDownload">全部下载</button>
+  </div>
+</div>
