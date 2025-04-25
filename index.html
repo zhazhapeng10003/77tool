@@ -1,83 +1,192 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>法院文书批量下载工具</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <!-- Font Awesome CDN -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
     <style>
+        /* 自定义一些基础样式和字体 */
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        .container {
-            background-color: #f5f5f5;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: #f0f2f5; /* 浅灰色背景 */
             color: #333;
-            text-align: center;
         }
-        .input-section, .file-list {
-            margin-bottom: 20px;
-            padding: 15px;
+        /* 模拟 Bento Grid 卡片的基本样式 */
+        .bento-card {
             background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 1rem; /* 圆角 */
+            padding: 1.5rem; /* 内边距 */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+            0 2px 4px -2px rgb(0 0 0 / 0.1); /* 阴影 */
+            overflow: hidden; /* 防止内容溢出 */
+            position: relative; /* 用于绝对定位子元素 */
         }
-        .input-section textarea {
-            width: 100%;
-            height: 150px;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            resize: vertical;
+        /* 超大字体样式 */
+        .text-super-large {
+            font-size: 4rem; /* 调整大小 */
+            font-weight: 800; /* 粗体 */
+            line-height: 1;
         }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
+        /* 英文点缀小字 */
+        .text-eng-small {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        /* 高亮色渐变 - 示例：蓝色 */
+        .highlight-gradient-blue {
+            background: linear-gradient(
+                    to bottom,
+                    rgba(59, 130, 246, 0.6),
+                    rgba(59, 130, 246, 0.1)
+            );
+            color: #1e40af; /* 深蓝色文字 */
+        }
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem; /* 减小按钮内边距 */
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
             cursor: pointer;
-            font-size: 14px;
+            transition: background-color 0.3s ease;
+            border: none;
         }
-        button:hover {
-            background-color: #45a049;
+        .btn-primary {
+            background-color: #3b82f6; /* 蓝色 */
+            color: white;
         }
-        .files {
-            list-style-type: none;
-            padding: 0;
+        .btn-primary:hover {
+            background-color: #2563eb;
         }
-        .files li {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+        .btn-secondary {
+            /* background-color: #e5e7eb; /* 灰色 */
+            /* color: #374151; */
+            background-color: #14b8a6; /* Teal-500 */
+            color: white;
         }
-        .files li a {
-            color: #2196F3;
-            text-decoration: none;
+        .btn-secondary:hover {
+            /* background-color: #d1d5db; */
+            background-color: #0d9488; /* Teal-600 */
         }
-        .files li a:hover {
-            text-decoration: underline;
+        /* 输入框样式 */
+        .input-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .hidden {
-            display: none;
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
         }
-        .status {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #e9f7ef;
-            border-left: 4px solid #4CAF50;
-            display: none;
+        /* 隐藏滚动条但允许滚动 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none; /* Safari and Chrome */
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
         }
     </style>
 </head>
-<body>
-<h1>Hello Github Pages</h1>
+<body class="min-h-screen p-4 sm:p-8">
+<!-- 小屏幕减小页面边距 -->
+<div class="container mx-auto max-w-6xl">
+    <!-- 页面标题和描述 -->
+    <header class="mb-12 text-center">
+        <h1 class="text-4xl sm:text-super-large text-gray-800">
+            法律文书 一键下载
+        </h1>
+        <!-- 小屏幕减小标题字体 -->
+        <p class="text-eng-small mt-2">BULK DOWNLOADER TOOL</p>
+        <p class="mt-4 text-lg text-gray-600">
+            输入法院发送的送达文书短信，一键下载全部文书。
+        </p>
+    </header>
+
+    <!-- 主体布局 -->
+    <div class="grid grid-cols-1 gap-6">
+        <!-- 改为单列布局 -->
+        <!-- 输入区域 -->
+        <div class="bento-card p-4 sm:p-6">
+            <!-- 小屏幕减小卡片内边距 -->
+            <!-- 移除 md:col-span-2 -->
+            <h2 class="text-xl sm:text-2xl font-bold mb-1 text-gray-700">
+                <!-- 小屏幕减小卡片标题字体 -->
+                输入法院发送的送达文书短信
+            </h2>
+            <p class="text-eng-small mb-4">PASTE THE SMS CONTENT BELOW</p>
+            <textarea
+                    id="urlInput"
+                    class="input-field h-24 resize-none mb-4"
+                    placeholder="请在此处粘贴法院发送的完整短信内容..."
+            ></textarea>
+            <button id="parseBtn" class="btn btn-primary w-full">
+                <i class="fas fa-cogs mr-2"></i>点击获取文书列表
+            </button>
+            <div
+                    id="loadingIndicator"
+                    class="mt-4 text-center text-blue-600 hidden"
+            >
+                <i class="fas fa-spinner fa-spin mr-2"></i>正在处理中...
+            </div>
+            <div id="errorMessage" class="mt-4 text-red-600 hidden"></div>
+        </div>
+
+        <!-- 文件列表和下载区域 -->
+        <div class="bento-card min-h-[300px] flex flex-col p-4 sm:p-6">
+            <!-- 小屏幕减小卡片内边距 -->
+            <!-- 移除 md:col-span-3 -->
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-700">
+                        文件列表
+                    </h2>
+                    <!-- 小屏幕减小卡片标题字体 -->
+                    <p class="text-eng-small">AVAILABLE DOCUMENTS</p>
+                </div>
+                <button id="downloadAllBtn" class="btn btn-secondary hidden">
+                    <i class="fas fa-download mr-2"></i>全部下载
+                </button>
+            </div>
+            <div
+                    id="fileList"
+                    class="flex-grow overflow-y-auto no-scrollbar space-y-3 pr-2"
+            >
+                <!-- 文件项将动态添加到这里 -->
+                <p class="text-gray-500 italic">
+                    请先输入短信内容并点击获取文书列表按钮。
+                </p>
+            </div>
+            <div id="downloadStatus" class="mt-4 text-sm text-gray-600"></div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="mt-12 text-center text-gray-500 text-sm">
+        <p>工具仅供技术演示，请遵守相关法律法规。</p>
+        <p>&copy; 2025 boyifuture. All rights reserved.</p>
+    </footer>
+</div>
+
+<!-- JavaScript 文件 -->
+<script src="script.js"></script>
 </body>
 </html>
