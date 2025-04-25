@@ -1,17 +1,83 @@
-<!-- 主要结构 -->
-<div class="container">
-  <h1>法律文书 一键下载</h1>
-  <div class="input-box">
-    <textarea id="sms-content" placeholder="粘贴法院发送的短信内容..."></textarea>
-    <button @click="parseSMS">解析文书</button>
-  </div>
-  
-  <div class="file-list">
-    <h3>文件列表</h3>
-    <div v-for="file in files" :key="file.name" class="file-item">
-      <span>{{ file.name }}</span>
-      <button @click="downloadFile(file)">下载</button>
-    </div>
-    <button class="bulk-download" @click="bulkDownload">全部下载</button>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法院文书批量下载工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .input-section, .file-list {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .input-section textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .files {
+            list-style-type: none;
+            padding: 0;
+        }
+        .files li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .files li a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+        .files li a:hover {
+            text-decoration: underline;
+        }
+        .hidden {
+            display: none;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9f7ef;
+            border-left: 4px solid #4CAF50;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Hello Github Pages</h1>
+</body>
+</html>
