@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法律文书一键下载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 16px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            resize: none;
+            margin-bottom: 20px;
+            color: #555;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #d1e1ff;
+            box-shadow: 0 0 0 2px rgba(59, 117, 255, 0.2);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: #3b75ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #2c63e0;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .result-area {
+            min-height: 120px;
+        }
+
+        footer {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        .disclaimer {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>法律文书 一键下载</h1>
+        <div class="subtitle">BULK DOWNLOADER TOOL</div>
+        <p class="description">输入法院发送的送达文书短信，一键下载全部文书。</p>
+    </header>
+
+    <div class="section">
+        <h2>输入法院发送的送达文书短信</h2>
+        <div class="section-subtitle">PASTE THE SMS CONTENT BELOW</div>
+        <textarea placeholder="请在此处粘贴法院发送的完整短信内容..."></textarea>
+        <button class="btn">
+            <i>🔄</i> 点击获取文书列表
+        </button>
+    </div>
+
+    <div class="section">
+        <h2>文件列表</h2>
+        <div class="section-subtitle">AVAILABLE DOCUMENTS</div>
+        <div class="result-area">
+            <p>请先输入短信内容并点击获取文书列表按钮。</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="disclaimer">工具仅供技术演示，请遵守相关法律法规。</div>
+        <div class="copyright">© 2023 boyfuture. All rights reserved.</div>
+    </footer>
+</div>
+
+<script>
+    document.querySelector('.btn').addEventListener('click', function() {
+        const smsContent = document.querySelector('textarea').value;
+
+        if (smsContent.trim() === '') {
+            alert('请输入法庭发送的短信内容');
+            return;
+        }
+
+        // 这里是演示代码，实际应用中应该有实际的处理逻辑
+        document.querySelector('.result-area p').textContent = '正在处理短信内容，请稍候...';
+
+        // 模拟处理时间
+        setTimeout(() => {
+            document.querySelector('.result-area').innerHTML = `
+                    <div>
+                        <p>共找到 3 个相关文件：</p>
+                        <ul style="padding-left: 20px; margin-top: 15px; color: #666;">
+                            <li>起诉状.pdf</li>
+                            <li>应诉通知书.pdf</li>
+                            <li>举证通知书.pdf</li>
+                        </ul>
+                        <button class="btn" style="margin-top: 15px;">下载全部文件</button>
+                    </div>
+                `;
+        }, 1500);
+    });
+</script>
+</body>
+</html>
